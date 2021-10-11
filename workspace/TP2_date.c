@@ -52,7 +52,7 @@ void initialiseDate(Date*date){
 
     printf("Entrer l'année:");
     scanf("%d",&((*date).annee));
-    printf("\nEntrer le mois en toute lettre:");
+    printf("\nEntrer le mois en nombre:");
     scanf("%d.",(int*)&date->mois);
     printf("\nEntrer le jour:");
     scanf("%d",&date->jour);
