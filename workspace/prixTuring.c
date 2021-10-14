@@ -55,13 +55,23 @@ struct Winner{
 };
 typedef struct Winner winner;
 
+
+void printWinners(winner **tab){
+for(int i=0;i<50;i++){
+	printf("Winner Year : %i\n",(tab[0]+i)->annee);
+		printf("%s\n",(tab[0]+i)->nom);
+		printf("%s\n",(tab[0]+i)->description);
+}
+}
 void readWinner(){
-	winner* tab[50];
+	winner *tab[50];
+	*tab=malloc(50*sizeof(winner));
 	for(int i=0;i<50;i++){
-		tab[i]->annee=scanLineAsInt();
-		tab[i]->nom=scanLine();
-		tab[i]->description=scanLine();
+		(tab[0]+i)->annee=scanLineAsInt();
+		(tab[0]+i)->nom=scanLine();
+		(tab[0]+i)->description=scanLine();
 	}
+	printWinners(tab);
 }
 int main(void)
 {	/*int nbGagnants = scanLineAsInt();
@@ -73,7 +83,7 @@ int main(void)
 	printf("%s\n",l);
 	l=scanLine();
 	printf("%s\n",l);*/
-
+	
 	readWinner();
 	return EXIT_SUCCESS;
 }
