@@ -11,7 +11,7 @@ int main(void){
 	printf("estVide(l) = %s\n",estVide(l)?"TRUE":"FALSE");
  
 	l = ajoutTete(1,l);
-	/*l = ajoutTete(2,l);
+	l = ajoutTete(2,l);
 	l = ajoutTete(4,l);
 	l = ajoutTete(1,l);
 	l = ajoutTete(5,l);
@@ -22,9 +22,9 @@ int main(void){
 
 	afficheListe_i(l);
 
-	ajoutFin_r(99,l);
+	ajoutFin_i(99,l);
 	afficheListe_i(l);
-
+/*
 	ajoutFin_r(100,l);
 	afficheListe_i(l);
 
@@ -77,6 +77,6 @@ int main(void){
 	afficheListe_r(l);
 
 	detruire_r(l);
-*/
+*/ free(l);
 	return EXIT_SUCCESS;
 }
