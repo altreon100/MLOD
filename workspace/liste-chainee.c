@@ -10,22 +10,25 @@ bool estVide(Liste l) {
 	return l==NULL;
 }
 
-/*
+
 // créer une liste d'un seul élément contenant la valeur v
 Liste creer(Element v){
-	return TODO;
-}*/
+	Liste liste;
+	liste=malloc(sizeof(Cellule));
+	liste->val=v;
+	return liste;
+}
 
 // ajoute l'élément v en tete de la liste l
 Liste ajoutTete(Element v, Liste l) {
 	Liste new;
-	new=NULL;
+	new=malloc(sizeof(Cellule));
 	new->val=v;
-	//new->suiv=l;
+	new->suiv=l;
 	return new;
 }
 
-/*
+
 void afficheElement(Element e) {
 	printf("%i ",e);
 }
@@ -36,14 +39,21 @@ void afficheElement(Element e) {
 // Attention la liste peut être vide !
 // version itérative
 void afficheListe_i(Liste l) {
-	TODO;
-}
+	while(l!=NULL){
+		afficheElement(l->val);
+		l=l->suiv;
+	}
 
+}
+/*
 // version recursive
 void afficheListe_r(Liste l) {
-	TODO;
-}
-
+	if(estVide(l))
+	afficheElement(l->val);
+	else
+	afficheListe_r(l->suiv);
+}*/
+/*
 void detruireElement(Element e) {}
 
 // Détruit tous les éléments de la liste l
@@ -56,13 +66,24 @@ void detruire_i(Liste l) {
 void detruire_r(Liste l) {
 	TODO;
 }
-
+*/
 // retourne la liste dans laquelle l'élément v a été ajouté en fin
 // version itérative
 Liste ajoutFin_i(Element v, Liste l) {
-	return TODO;
+	Liste new;
+	new=malloc(sizeof(Cellule));
+	new->val=v;
+	new->suiv=NULL;
+	if(estVide(l))
+	return new;
+	else {
+		while((l->suiv)!=NULL)
+		l=l->suiv;
+		l->suiv=new;
+	}
+	return new;
 }
-
+/*
 // version recursive
 Liste ajoutFin_r(Element v, Liste l) {
 	return TODO;
