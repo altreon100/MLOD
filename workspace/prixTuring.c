@@ -56,34 +56,39 @@ struct Winner{
 typedef struct Winner winner;
 
 
-void printWinners(winner **tab){
-for(int i=0;i<50;i++){
-	printf("Winner Year : %i\n",(tab[0]+i)->annee);
-		printf("%s\n",(tab[0]+i)->nom);
-		printf("%s\n",(tab[0]+i)->description);
+void printWinners(winner *tab,int nombreGagnants){
+for(int i=0;i<nombreGagnants;i++){
+	printf("Winner Year : %i\n",tab[i].annee);
+		printf("%s\n",tab[i].nom);
+		printf("%s\n",tab[i].description);
 }
 }
-void readWinner(){
-	winner *tab[50];
-	*tab=malloc(50*sizeof(winner));
-	for(int i=0;i<50;i++){
+void infosAnnee(winner **tab){
+	int anne;
+	printf("Donner l'annee voulu:");
+	scanf("%i\n",&anne);
+		for(int i=0;i<50;i++){
+			if(anne==(tab[0]+i)->annee){
+				printf("Winner Year : %i\n",tab[anne]->annee);
+		printf("%s\n",tab[anne]->nom);
+		printf("%s\n",tab[anne]->description);
+			}
+	}
+}
+void readWinner(winner **tab,int nombreGagnants){
+	(*tab)=calloc(nombreGagnants,sizeof(winner));
+	for(int i=0;i<=nombreGagnants;i++){
 		(tab[0]+i)->annee=scanLineAsInt();
 		(tab[0]+i)->nom=scanLine();
 		(tab[0]+i)->description=scanLine();
 	}
-	printWinners(tab);
 }
+
 int main(void)
-{	/*int nbGagnants = scanLineAsInt();
-	printf( "%i\n",nbGagnants);
-	//int i = scanLineAsInt();
-	nbGagnants=scanLineAsInt();
-	printf( "%i\n",nbGagnants);
-	char* l=scanLine();
-	printf("%s\n",l);
-	l=scanLine();
-	printf("%s\n",l);*/
-	
-	readWinner();
+{	int nbGagnants = scanLineAsInt();
+	winner *tab;
+	readWinner(&tab,nbGagnants);
+	printWinners(tab,nbGagnants);
+	//free(tab);
 	return EXIT_SUCCESS;
 }
