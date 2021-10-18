@@ -26,6 +26,8 @@ void readMatrixArray(MatrixArray* Matrice,int nbMat,int ligne,int colonne){
 
 void printMatrix(MatrixArray tabMat,int nbMat){
     int ligne,colonne;
+    ligne=0;
+    colonne=0;
     for(int i=0;i<nbMat;i++){
         
         readMatrixArray(tabMat,nbMat,ligne,colonne);
