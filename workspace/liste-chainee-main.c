@@ -6,7 +6,7 @@
 #include <stdio.h>
 
 int main(void){
-	Liste l;
+	Liste l,p;
 	l = NULL;
 	printf("estVide(l) = %s\n",estVide(l)?"TRUE":"FALSE");
  
@@ -20,11 +20,11 @@ int main(void){
 	l = ajoutTete(4,l);
 	l = ajoutTete(1,l);
 
-	afficheListe_i(l);
+	afficheListe_r(l);
 
 	ajoutFin_i(99,l);
 	afficheListe_i(l);
-/*
+
 	ajoutFin_r(100,l);
 	afficheListe_i(l);
 
@@ -39,7 +39,7 @@ int main(void){
 		afficheElement(p->val);
 		printf("\n");
 	}
-
+/*
 	p = cherche_r(200,l);
 	printf("cherche_r(200) : %s\n",estVide(p)?"pas trouve":"[ERREUR] trouve !!!");
 
