@@ -39,34 +39,39 @@ void afficheElement(Element e) {
 // Attention la liste peut être vide !
 // version itérative
 void afficheListe_i(Liste l) {
-	while(l!=NULL){
+	while(!estVide(l)){
 		afficheElement(l->val);
 		l=l->suiv;
 	}
 
 }
-/*
 // version recursive
 void afficheListe_r(Liste l) {
-	if(estVide(l))
+	if(!estVide(l)){
 	afficheElement(l->val);
-	else
-	afficheListe_r(l->suiv);
-}*/
-/*
-void detruireElement(Element e) {}
+	afficheListe_r(l->suiv);}
+	
+}
+
+//void detruireElement(Element e) {}
 
 // Détruit tous les éléments de la liste l
 // version itérative
-void detruire_i(Liste l) {
-	TODO;
+/*void detruire_i(Liste l) {
+	while(!estVide(l)){
+		detruireElement(l->val);
+		l=l->suiv;
+	}
 }
 
 // version récursive
 void detruire_r(Liste l) {
-	TODO;
-}
-*/
+	if(!estVide(l)){
+	detruireElement(l->val);
+	detruire_r(l->suiv);}
+	
+}*/
+
 // retourne la liste dans laquelle l'élément v a été ajouté en fin
 // version itérative
 Liste ajoutFin_i(Element v, Liste l) {
@@ -74,19 +79,25 @@ Liste ajoutFin_i(Element v, Liste l) {
 	new=malloc(sizeof(Cellule));
 	new->val=v;
 	new->suiv=NULL;
-	if(estVide(l))
-	return new;
-	else {
+	
 		while((l->suiv)!=NULL)
 		l=l->suiv;
 		l->suiv=new;
-	}
 	return new;
 }
-/*
+
 // version recursive
 Liste ajoutFin_r(Element v, Liste l) {
-	return TODO;
+
+	if(!estVide(l->suiv))
+	ajoutFin_r(v,l->suiv);
+	else{
+	Liste new;
+	new=malloc(sizeof(Cellule));
+	new->val=v;
+	l->suiv=new;
+	}
+	return l;
 }
 
 // compare deux elements
@@ -97,9 +108,17 @@ bool equalsElement(Element e1, Element e2){
 // Retourne un pointeur sur l'élément de la liste l contenant la valeur v ou NULL
 // version itérative
 Liste cherche_i(Element v,Liste l) {
-	return TODO;
-}
+	Liste new;
+	new=malloc(sizeof(Cellule));
 
+	while(!estVide(l)){
+	if(equalsElement(v,l->val)){
+	new->val=l->val;
+	return new;}
+	l=l->suiv;}
+	return NULL;
+}
+/*
 // version récursive
 Liste cherche_r(Element v,Liste l) {
 	return TODO;
