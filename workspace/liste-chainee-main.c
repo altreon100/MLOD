@@ -28,10 +28,10 @@ int main(void){
 	ajoutFin_r(100,l);
 	afficheListe_i(l);
 
-	p = cherche_i(200,l);
+	p = cherche_r(200,l);
 	printf("cherche_i(200) : %s\n",estVide(p)?"pas trouve":"[ERREUR] trouve !!!");
 
-	p = cherche_i(99,l);
+	p = cherche_r(99,l);
 	if(estVide(p))
 		printf("cherche_i(99) : [ERREUR] pas trouve \n");
 	else {
@@ -76,7 +76,7 @@ int main(void){
 	l = retirePremier_r(99,l);
 	afficheListe_r(l);
 
-	detruire_r(l);
-*/ free(l);
+*/  detruire_i(l);
+	detruire_r(p);
 	return EXIT_SUCCESS;
 }
