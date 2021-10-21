@@ -43,34 +43,39 @@ void afficheListe_i(Liste l) {
 		afficheElement(l->val);
 		l=l->suiv;
 	}
-
 }
 // version recursive
 void afficheListe_r(Liste l) {
 	if(!estVide(l)){
-	afficheElement(l->val);
-	afficheListe_r(l->suiv);}
-	
+		afficheElement(l->val);
+		afficheListe_r(l->suiv);
+	}
 }
 
-//void detruireElement(Element e) {}
-
+/*void detruireElement(Element e) {
+	free(e);
+}
+*/
 // Détruit tous les éléments de la liste l
 // version itérative
-/*void detruire_i(Liste l) {
+void detruire_i(Liste l) {
+	Liste next;
 	while(!estVide(l)){
-		detruireElement(l->val);
-		l=l->suiv;
+		next=l->suiv;
+		free(l);
+		l=next;
 	}
 }
 
 // version récursive
 void detruire_r(Liste l) {
+	Liste next;
 	if(!estVide(l)){
-	detruireElement(l->val);
-	detruire_r(l->suiv);}
-	
-}*/
+		next=l->suiv;
+		free(l);
+		detruire_r(next);
+	}
+}
 
 // retourne la liste dans laquelle l'élément v a été ajouté en fin
 // version itérative
@@ -79,23 +84,21 @@ Liste ajoutFin_i(Element v, Liste l) {
 	new=malloc(sizeof(Cellule));
 	new->val=v;
 	new->suiv=NULL;
-	
-		while((l->suiv)!=NULL)
+	while((l->suiv)!=NULL)
 		l=l->suiv;
-		l->suiv=new;
+	l->suiv=new;
 	return new;
 }
 
 // version recursive
 Liste ajoutFin_r(Element v, Liste l) {
-
 	if(!estVide(l->suiv))
-	ajoutFin_r(v,l->suiv);
+		ajoutFin_r(v,l->suiv);
 	else{
-	Liste new;
-	new=malloc(sizeof(Cellule));
-	new->val=v;
-	l->suiv=new;
+		Liste new;
+		new=malloc(sizeof(Cellule));
+		new->val=v;
+		l->suiv=new;
 	}
 	return l;
 }
@@ -108,22 +111,23 @@ bool equalsElement(Element e1, Element e2){
 // Retourne un pointeur sur l'élément de la liste l contenant la valeur v ou NULL
 // version itérative
 Liste cherche_i(Element v,Liste l) {
-	Liste new;
-	new=malloc(sizeof(Cellule));
-
 	while(!estVide(l)){
-	if(equalsElement(v,l->val)){
-	new->val=l->val;
-	return new;}
-	l=l->suiv;}
+		if(equalsElement(v,l->val))
+			return l;
+		l=l->suiv;
+	}
 	return NULL;
 }
-/*
+
 // version récursive
 Liste cherche_r(Element v,Liste l) {
-	return TODO;
+	if(estVide(l))
+		return NULL;
+	if(equalsElement(v,l->val))
+		return l;
+	return cherche_r(v,l->suiv);
 }
-
+/*
 // Retourne la liste modifiée dans la laquelle le premier élément ayant la valeur v a été supprimé
 // ne fait rien si aucun élément possède cette valeur
 // version itérative
