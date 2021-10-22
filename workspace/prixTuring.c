@@ -89,6 +89,7 @@ int main(void)
 	winner *tab;
 	readWinner(&tab,nbGagnants);
 	printWinners(tab,nbGagnants);
+	infosAnnee(&tab);
 	//free(tab);
 	return EXIT_SUCCESS;
 }
