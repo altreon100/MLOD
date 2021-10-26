@@ -5,28 +5,30 @@
 #include<string.h>
 
 // Definition des fonctions spécifiques à l'élément pour les chaines
-void afficheElement(Element e){
+void afficheElement(Element e)
+{
     Music *music = (Music*)e;
     printf("%s,",music->name);
     printf("%s,",music->artist);
     printf("%s,",music->album);
     printf("%s,",music->genre);
-    printf("%i,",music->discNumber);
+    if(music->discNumber==0)
+        printf(",");
+    else
+        printf("%i,",music->discNumber);
     printf("%i,",music->trackNumber);
     printf("%i",music->year);
     printf("\n");
 }
 
-void detruireElement(Element e){
-    Music *m = (Music*) e;
-    free(m->name);
-    free(m->artist);
-    free(m->album);
-    free(m->genre);
-    free(e);
+void detruireElement(Element e)
+{
+   Music *m=(Music*)e;
+    free(m);
 }
 
-bool equalsElement(Element e1, Element e2){
+bool equalsElement(Element e1, Element e2)
+{
     Music *m1 = (Music*) e1;
     Music *m2 = (Music*) e2;
     bool res=(strcmp(m1->name,m2->name)==0);
@@ -46,36 +48,54 @@ bool equalsElement(Element e1, Element e2){
 
 }
 
-Music* ReadLine(FILE* fichier, char* ligne){
-    
+Music* ReadLine( char* ligne)
+{
     Music* m =malloc(sizeof(Music));
-    char *line=strdup(ligne);
-    
+    char* line=strdup(ligne);
     m->name=strsep(&line,",");
 	m->artist=strsep(&line,",");
     m->album=strsep(&line,",");
     m->genre=strsep(&line,",");
-   m->discNumber = atoi( strsep(&line,","));
-   m->trackNumber = atoi( strsep(&line,","));
-   m->year = atoi( strsep(&line,","));
+    m->discNumber = atoi( strsep(&line,","));
+    m->trackNumber = atoi( strsep(&line,","));
+    m->year = atoi( strsep(&line,","));
 	return m;
 }
-Liste readFile(FILE *fichier){
+
+Liste readFile(FILE *fichier)
+{
 	Liste l = NULL;
 	char *ligne=malloc(sizeof(char)*255);
     fgets(ligne,255,fichier);
-	while(fgets(ligne,255,fichier)!=NULL){
-            l=ajoutFin_i(ReadLine(fichier,ligne),l);
-		fgets(ligne,255,fichier);
-	}
+	char *firstLine=strdup(ligne);
+	printf("%s",firstLine);
+	while(fgets(ligne,255,fichier)!=NULL)
+        l=ajoutFin_i(ReadLine(ligne),l);
     
     return l;
 }
-/*
 
-
-void*->Music*
-
-
-Music*m=(music*)els
-m->*/
+Liste triYear(Liste l)
+{
+    if(l==NULL)
+        return NULL;
+    Liste new  = l;
+    Liste suiv = NULL;
+    while(!estVide(new))
+    {
+        suiv = new->suiv;
+        while(!estVide(suiv))
+        {
+            if( ((Music*)(suiv->val))->year < ((Music*)(new->val))->year)
+            {
+                void *transition;
+                transition = suiv->val;
+                suiv->val = new->val;
+                new->val = transition;
+            }
+            suiv = suiv->suiv;
+        }
+        new = new->suiv;
+    }
+    return l;
+}
