@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include<string.h>
 
+//gcc -W -Wall LinkedList.c mySpitofy.c linkedListOfMusic.c  -o mySpitofy
 int main(){
 	Liste l;
 
