@@ -23,8 +23,9 @@ void afficheElement(Element e)
 
 void detruireElement(Element e)
 {
-   Music *m=(Music*)e;
+   Music *m = (Music*)e; 
     free(m);
+    free(e);
 }
 
 bool equalsElement(Element e1, Element e2)
@@ -50,7 +51,7 @@ bool equalsElement(Element e1, Element e2)
 
 Music* ReadLine( char* ligne)
 {
-    Music* m =malloc(sizeof(Music));
+    Music* m=malloc(sizeof(Music)) ;
     char* line=strdup(ligne);
     m->name=strsep(&line,",");
 	m->artist=strsep(&line,",");
@@ -71,7 +72,8 @@ Liste readFile(FILE *fichier)
 	printf("%s",firstLine);
 	while(fgets(ligne,255,fichier)!=NULL)
         l=ajoutFin_i(ReadLine(ligne),l);
-    
+    free(ligne);
+    free(firstLine);
     return l;
 }
 
