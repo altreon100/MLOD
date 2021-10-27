@@ -25,7 +25,6 @@ void detruireElement(Element e)
 {
    Music *m = (Music*)e; 
     free(m);
-    free(e);
 }
 
 bool equalsElement(Element e1, Element e2)
