@@ -4,7 +4,6 @@
 #include <stdbool.h>
 #include<string.h>
 
-// Definition des fonctions spécifiques à l'élément pour les chaines
 void afficheElement(Element e)
 {
     Music *music = (Music*)e;
@@ -23,8 +22,8 @@ void afficheElement(Element e)
 
 void detruireElement(Element e)
 {
-   Music *m = (Music*)e; 
-    free(m);
+    free(e);
+
 }
 
 bool equalsElement(Element e1, Element e2)
@@ -45,12 +44,11 @@ bool equalsElement(Element e1, Element e2)
 	if(res!=0)
 		res=(m1->year==m2->year);
 	return res;
-
 }
 
 Music* ReadLine( char* ligne)
 {
-    Music* m=malloc(sizeof(Music)) ;
+    Music* m=malloc(sizeof(Music));
     char* line=strdup(ligne);
     m->name=strsep(&line,",");
 	m->artist=strsep(&line,",");
@@ -66,6 +64,7 @@ Liste readFile(FILE *fichier)
 {
 	Liste l = NULL;
 	char *ligne=malloc(sizeof(char)*255);
+    
     fgets(ligne,255,fichier);
 	char *firstLine=strdup(ligne);
 	printf("%s",firstLine);
