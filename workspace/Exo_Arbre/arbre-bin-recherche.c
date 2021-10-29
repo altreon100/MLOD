@@ -27,28 +27,39 @@ ArbreBinaire creer(Element e)
 // insere e dans a sachant que a est un arbre binaire de recherche
 // si a contient déjà un element e, ce dernier n'est pas insérer afin d'éviter les doublons
 // version itérative
-ArbreBinaire insere_i(ArbreBinaire a, Element e) {
+ArbreBinaire insere_i(ArbreBinaire a, Element e) 
+{
 	ArbreBinaire new=a;
-	if(estVide(new))
+	if(estVide(a))
 		return creer(e);
-	while(new->val!=e){
-		if(new->val>e){
-				if(estVide(new->filsGauche))
-					new->filsGauche=creer(e);
-				new=new->filsGauche;
+	while(!estVide(new) && new->val!=e)
+	{
+		if(new->val>e)
+		{
+			if(estVide(new->filsGauche))
+			{
+				new->filsGauche=creer(e);
+				return a;
 			}
-			else if(new->val<e){
-				if(estVide(new->filsDroit))
-					new->filsDroit=creer(e);
-				new=new->filsDroit;
+			new=new->filsGauche;
+		}
+		else 
+		{
+			if(estVide(new->filsDroit))
+			{
+				new->filsDroit=creer(e);
+				return a;
 			}
+			new=new->filsDroit;
+		}
 	}
 	return a;
 }
 // insere e dans a sachant que a est un arbre binaire de recherche
 // si a contient déjà un element e, ce dernier n'est pas insérer afin d'éviter les doublons
 // version récursive
-ArbreBinaire insere_r(ArbreBinaire a, Element e) {
+ArbreBinaire insere_r(ArbreBinaire a, Element e)
+{
 	if (estVide(a))
 		return creer(e);
 	else
@@ -62,7 +73,8 @@ ArbreBinaire insere_r(ArbreBinaire a, Element e) {
 }
 
 // retourne le nombre de noeud contenus dans l'arbre a
-int nombreDeNoeud(ArbreBinaire a){
+int nombreDeNoeud(ArbreBinaire a)
+{
 	if (estVide(a))
 		return 0;
 	return (1 + nombreDeNoeud(a->filsGauche) + nombreDeNoeud(a->filsDroit));
@@ -71,51 +83,53 @@ int nombreDeNoeud(ArbreBinaire a){
 
 // retourne la profondeur du noeud ayant la valeur e dans a
 // retourne -1 si a est vide ou si e n'est pas dans a
-int profondeur(ArbreBinaire a, Element e){
+int profondeur(ArbreBinaire a, Element e)
+{
 	if(estVide(a))
 		return -1;
-	if(e==a->val)
-		return 1;
-	else
-	{
-		if(e<a->val){
-			int prof=0;
-			prof=profondeur(a->filsGauche,e);
-			if(prof!=-1)
-				return prof+1;
-		}
-		else if (e>a->val){
-			int prof=0;
-			prof=profondeur(a->filsDroit,e);
-			if(prof!=-1)
-				return prof+1;
-			
-		}
-	}
-		return -1;
+	if(a->val==e)
+		return 0;
+	if(profondeur(a->filsDroit,e)<profondeur(a->filsGauche,e))
+		return profondeur(a->filsGauche,e)+1;
+	if (profondeur(a->filsDroit,e)>profondeur(a->filsGauche,e))
+		return profondeur(a->filsDroit,e)+1;
+	return -1;
 }
-int maxi(int a, int b){
-	if(a>=b)
-		return a;
-	else
-		return b;
-}
-
 // retourne la hauteur de l'arbre a
-int hauteur(ArbreBinaire a){
+int hauteur(ArbreBinaire a)
+{
 	if(estVide(a))
-		return 1;
-	return 1+ maxi(hauteur(a->filsGauche),hauteur(a->filsDroit));
+		return 0;
+	int hauteur_Gauche=hauteur(a->filsGauche);
+	int hauteur_Droite=hauteur(a->filsDroit);
+		if(hauteur_Droite>hauteur_Gauche)
+			return hauteur_Droite+1;
+		else
+			return hauteur_Gauche+1;
 }
 
 // retourne le pere de elem dans l'arbre a ou NULL s'il n'existe pas
-ArbreBinaire pere(ArbreBinaire a, Element elem){
+ArbreBinaire pere(ArbreBinaire a, Element elem)
+{
 	if(estVide(a))
 		return NULL;
-	if(a->filsDroit==elem || a->filsGauche==elem)
+	if(!estVide(a->filsGauche))
+	{
+		if(a->filsGauche->val==elem)
+			return a;
+	}
+	if(!estVide(a->filsDroit))
+	{
+		if(a->filsDroit->val==elem)
+			return a;
+	}
+	if(a->val==elem)
+		return NULL;
+	if(elem<a->val)
+		return pere(a->filsGauche,elem);
+	if(elem>a->val)
+		return pere(a->filsDroit,elem);
 	return a;
-	if(elem<a->filsDroit)
-	return NULL;
 }
 
 
@@ -151,24 +165,31 @@ void afficheGDR_r(ArbreBinaire a){
 
 // retourne le noeud dont la valeur est minimum dans l'arbre
 // Suppose que a est un arbre binaire de recherche sans doublons
-ArbreBinaire min(ArbreBinaire a){
-	while(!estVide(a->filsGauche))
-	a=a->filsGauche;
-	return a;
+ArbreBinaire min(ArbreBinaire a)
+{
+	if(estVide(a))
+		return NULL;
+	if(estVide(a->filsGauche))
+		return a;
+	return min(a->filsGauche);
 }
 
 // retourne le noeud dont la valeur est maximum dans l'arbre
 // Suppose que a est un arbre binaire de recherche sans doublons
-ArbreBinaire max(ArbreBinaire a){
-	while(!estVide(a->filsDroit))
-	a=a->filsDroit;
-	return a;
+ArbreBinaire max(ArbreBinaire a)
+{
+	if(estVide(a))
+		return NULL;
+	if(estVide(a->filsDroit))
+		return a;
+	return max(a->filsDroit);
 }
 
 
 // retourne l'arbre dont la valeur de la racine est elem et NULL si elem n'existe dans a 
 // version récursive
-ArbreBinaire recherche_r(ArbreBinaire a, Element elem){
+ArbreBinaire recherche_r(ArbreBinaire a, Element elem)
+{
 	if(estVide(a))
 		return NULL;
 	if(elem==a->val)
@@ -186,11 +207,12 @@ ArbreBinaire supprimer_r(ArbreBinaire a,Element x)
 
 }*/
 
-void detruire_r(ArbreBinaire a){
-if(estVide(a))
-return ;
-detruire_r(a->filsGauche);
-detruire_r(a->filsDroit);
-free(a);
+void detruire_r(ArbreBinaire a)
+{
+	if(estVide(a))
+		return ;
+	detruire_r(a->filsGauche);
+	detruire_r(a->filsDroit);
+	free(a);
 }
 
