@@ -68,4 +68,5 @@ ArbreBinaire recherche_r(ArbreBinaire a, Element elem);
 ArbreBinaire supprimer_r(ArbreBinaire a,Element x);
 
 void detruire_r(ArbreBinaire a);
+void detruireElement(Element e);
 
